@@ -1,14 +1,14 @@
 import './App.css';
 import DataTable from './components/TransactionsTable';
-import TransactionsDialog from './common/TransactionsDialog';
+import TransactionsDialog from './components/TransactionsDialog';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <body className='App-body'>
         <DataTable />
         <TransactionsDialog />
-      </header>
+      </body>
     </div>
   );
 }

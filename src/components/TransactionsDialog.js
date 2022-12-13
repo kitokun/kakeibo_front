@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
@@ -25,7 +24,7 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, r
         onChange({
           target: {
             name: props.name,
-            value: values.value,
+            value: Number(values.value),
           },
         });
       }}
@@ -77,7 +76,7 @@ export default function TransactionsDialog() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Slide in alert dialog
+        登録
       </Button>
       <Dialog
         open={open}
@@ -86,7 +85,6 @@ export default function TransactionsDialog() {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
