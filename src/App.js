@@ -1,6 +1,7 @@
 import './App.css';
 import DataTable from './components/TransactionsTable';
 import TransactionsDialog from './components/TransactionsDialog';
+import SuppliersDialog from './components/SuppliersDialog'
 import AssetTable from './components/AssetTable';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
         <AssetTable />
         <DataTable />
         <TransactionsDialog />
+        <SuppliersDialog />
       </body>
     </div>
   );

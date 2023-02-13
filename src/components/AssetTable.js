@@ -14,12 +14,12 @@ export default function AssetTable() {
         get();
     }, [])
     
-    const list = rows.map((t) => <li>{t.amount}</li>);
+    const amount = rows.map((t) => t.amount);
 
     return (
         <div style={{ height: 200, width: 300}}>
             <span style={{color: "black"}}>
-                <uk>{list}</uk>
+                資産金額：{amount}
             </span>
         </div>
     );

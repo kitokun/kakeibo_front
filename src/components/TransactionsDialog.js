@@ -76,7 +76,7 @@ export default function TransactionsDialog() {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        登録
+        取引登録
       </Button>
       <Dialog
         open={open}
