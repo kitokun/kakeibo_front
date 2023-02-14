@@ -3,12 +3,13 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import Select from '@mui/material/Select';
 import Slide from '@mui/material/Slide';
 
 import createTransactions from '../scripts/api/createTransactions';
-import { TextField } from '@mui/material';
+import { MenuItem, TextField } from '@mui/material';
 import NumberFormat from 'react-number-format';
+import fetchTransactionEntities from '../scripts/api/fetchTransactionEntities';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,6 +47,16 @@ export default function TransactionsDialog() {
     source: '',
     description: '',
   });
+
+  const [transactionEntities, setTransactionEntities] = React.useState([]);
+  React.useEffect(()=>{
+    const get = async() => {
+      const data = await fetchTransactionEntities();
+
+      setTransactionEntities(data);
+    };
+    get();
+    }, [])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -109,26 +120,32 @@ export default function TransactionsDialog() {
               inputComponent: NumberFormatCustom,
             }}
           />
-          <TextField
-            autoFocus
-            margin='dense'
+         <Select
             value={values.destination}
-            onChange={handleChange}
             name='destination'
             id='destination'
-            label='支払先'
-            variant='standard'
-          />
-          <TextField
-            autoFocus
-            margin='dense'
+            label="支払先"
+            onChange={handleChange}         
+          >
+            <MenuItem
+              value={transactionEntities.filter(t => t.transaction_entity_type === 'destination').map(t => t.transaction_entity).toString()}
+            >
+              {transactionEntities.filter(t => t.transaction_entity_type === 'destination').map(t => t.transaction_entity)}
+            </MenuItem>
+          </Select>
+         <Select
             value={values.source}
-            onChange={handleChange}
             name='source'
             id='source'
-            label='支払元'
-            variant='standard'
-          />
+            label="支払先"
+            onChange={handleChange}         
+          >
+            <MenuItem
+              value={transactionEntities.filter(t => t.transaction_entity_type === 'source').map(t => t.transaction_entity).toString()}
+            >
+              {transactionEntities.filter(t => t.transaction_entity_type === 'source').map(t => t.transaction_entity)}
+            </MenuItem>
+          </Select>
           <TextField
             autoFocus
             margin='dense'
