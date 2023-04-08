@@ -58,15 +58,51 @@ export default function TransactionsDialog() {
     get();
     }, [])
 
+  const [errors, setErrors] = React.useState({});
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setErrors({});
     setOpen(false);
   };
 
+
+  const validateInputs = () => {
+    const { amount, nominal, destination, source } = values;
+    const errors = {};
+    let isValid = true;
+
+    if (!nominal.trim()) {
+      errors.nominal = '名目を入力してください';
+      isValid = false;
+    }
+    if (amount <= 0) {
+      errors.amount = '金額を正の整数で入力してください';
+      isValid = false;
+    }
+    if (!destination) {
+      errors.destination = '支払先を選択してください';
+      isValid = false;
+    }
+    if (!source) {
+      errors.source = '支払元を選択してください';
+      isValid = false;
+    }
+    
+    return { isValid, errors };
+  };
+
   const submit = () => {
+    const { isValid, errors } = validateInputs();
+    
+    if (!isValid) {
+      setErrors(errors);
+      return;
+    }
+
     createTransactions(
       values.amount, 
       values.nominal,
@@ -125,8 +161,11 @@ export default function TransactionsDialog() {
             name='destination'
             id='destination'
             label="支払先"
-            onChange={handleChange}         
+            onChange={handleChange} 
+            defaultValue={''}    
+            displayEmpty    
           >
+            <MenuItem value={''} disabled style={{display:"none"}}>支払先を選択してください</MenuItem>
             {transactionEntities
               .filter(t => t.transaction_entity_type === 'destination')
               .map(t => (
@@ -140,8 +179,10 @@ export default function TransactionsDialog() {
             name='source'
             id='source'
             label="支払元"
-            onChange={handleChange}         
+            onChange={handleChange}
+            displayEmpty
           >
+            <MenuItem value={''} disabled style={{display:"none"}}>支払元を選択してください</MenuItem>
             {transactionEntities
               .filter(t => t.transaction_entity_type === 'source')
               .map(t => (
@@ -160,6 +201,10 @@ export default function TransactionsDialog() {
             label='説明'
             variant='standard'
           />
+          {errors.nominal && <p style={{color: 'red'}}>{errors.nominal}</p>}
+          {errors.amount && <p style={{color: 'red'}}>{errors.amount}</p>}
+          {errors.destination && <p style={{color: 'red'}}>{errors.destination}</p>}
+          {errors.source && <p style={{color: 'red'}}>{errors.source}</p>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>キャンセル</Button>
