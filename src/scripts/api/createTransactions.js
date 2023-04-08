@@ -8,6 +8,6 @@ export default async function submitTransaction(amount, nominal, destination, so
         source: source,
         description: description,
     };
-    const res = await axios.post('http://0.0.0.0:8080/money_transaction/create', data);
+    const res = await axios.post('http://0.0.0.0:8080/transaction', data);
     console.log(res);
 }
