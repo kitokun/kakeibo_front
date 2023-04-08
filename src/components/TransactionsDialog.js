@@ -127,24 +127,28 @@ export default function TransactionsDialog() {
             label="支払先"
             onChange={handleChange}         
           >
-            <MenuItem
-              value={transactionEntities.filter(t => t.transaction_entity_type === 'destination').map(t => t.transaction_entity).toString()}
-            >
-              {transactionEntities.filter(t => t.transaction_entity_type === 'destination').map(t => t.transaction_entity)}
-            </MenuItem>
+            {transactionEntities
+              .filter(t => t.transaction_entity_type === 'destination')
+              .map(t => (
+                <MenuItem key={t.id} value={t.transaction_entity}>
+                  {t.transaction_entity}
+                </MenuItem>
+              ))}
           </Select>
          <Select
             value={values.source}
             name='source'
             id='source'
-            label="支払先"
+            label="支払元"
             onChange={handleChange}         
           >
-            <MenuItem
-              value={transactionEntities.filter(t => t.transaction_entity_type === 'source').map(t => t.transaction_entity).toString()}
-            >
-              {transactionEntities.filter(t => t.transaction_entity_type === 'source').map(t => t.transaction_entity)}
-            </MenuItem>
+            {transactionEntities
+              .filter(t => t.transaction_entity_type === 'source')
+              .map(t => (
+                <MenuItem key={t.id} value={t.transaction_entity}>
+                  {t.transaction_entity}
+                </MenuItem>
+              ))}
           </Select>
           <TextField
             autoFocus
